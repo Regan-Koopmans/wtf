@@ -48,6 +48,7 @@ def jump_if_zero():
             braces -= 1
         if source_code[instruction_pointer] == '[':
             braces += 1
+    instruction_pointer += 1
     
     
 def jump_not_zero():
@@ -64,8 +65,6 @@ def jump_not_zero():
             braces -= 1
     instruction_pointer -= 1
             
-           
-
 instructions = {
     '>': move_head_pointer_right,
     '<': move_head_pointer_left,
@@ -82,6 +81,18 @@ def get_source_code(filename: str) -> str:
     with open(filename, "r") as f:
         return f.read().replace('\n', '')
 
+
+def run(source: str):
+    global instruction_pointer
+    global source_code
+    source_code = source
+
+    while instruction_pointer < len(source_code):
+        if source_code[instruction_pointer] in instructions:
+            instructions[source_code[instruction_pointer]]()
+        instruction_pointer += 1
+
+
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
@@ -89,8 +100,4 @@ if __name__ == "__main__":
         sys.exit()
         
     source_code = get_source_code(sys.argv[1])
-    while instruction_pointer < len(source_code):
-        if source_code[instruction_pointer] in instructions:
-            instructions[source_code[instruction_pointer]]()
-        instruction_pointer += 1
-        
+    run(source_code)
