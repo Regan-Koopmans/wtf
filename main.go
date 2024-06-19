@@ -42,7 +42,6 @@ func run(source string) {
 						braces += 1
 					}
 				}
-				instruction_pointer += 1
 			}
 		case ']':
 			if cells[head_pointer] != 0 {
@@ -56,7 +55,6 @@ func run(source string) {
 						braces -= 1
 					}
 				}
-				instruction_pointer -= 1
 			}
 
 		}
@@ -64,12 +62,20 @@ func run(source string) {
 	}
 }
 
+func compile(source string) {
+	
+}
+
 func main() {
-	if len(os.Args) < 2 {
+	if len(os.Args) < 3 {
 		fmt.Println("Please supply program")
 		return
 	}
 
-	source_code := get_source_code(os.Args[1])
-	run(source_code)
+	source_code := get_source_code(os.Args[2])
+	switch os.Args[1] {
+		case "run": run(source_code)
+		case "compile": compile(source_code)
+		default: fmt.Printf("Unrecognised command '%s'. Supported commands: compile, run\n", os.Args[1])
+	}
 }
