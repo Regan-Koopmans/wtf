@@ -3,7 +3,7 @@
 ## Building
 
 ```
-go build
+make
 ```
 
 
